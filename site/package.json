@@ -1,0 +1,14 @@
+{
+  "name": "VuexcellentDocs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Reed Jones <reedjones@reedjones.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "vuepress": "^1.0.2"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
