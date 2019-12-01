@@ -1,5 +1,6 @@
 {
-    "version": "v1.3.0",
+    "version": "v2.0.0",
+    "name": "vuexcellent/vuexcellent",
     "require-dev": {
         "orchestra/testbench": "^4.4",
         "phpunit/phpunit": "^8.4",
