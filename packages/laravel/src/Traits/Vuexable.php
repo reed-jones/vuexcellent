@@ -2,6 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Traits;
 
+use ReedJones\Vuexcellent\Exceptions\VuexInvalidKeyException;
 use ReedJones\Vuexcellent\Extensions\VuexSmartCollection;
 use ReedJones\Vuexcellent\Facades\Vuex;
 
@@ -18,8 +19,8 @@ trait Vuexable
     {
         return new VuexSmartCollection(
             $models,
-            $this->getVuexModule(),
-            $this->getVuexCollectionKey()
+            $this->getDefaultVuexModule(),
+            $this->getDefaultVuexCollectionKey()
         );
     }
 
@@ -28,7 +29,7 @@ trait Vuexable
      *
      * @return string|null
      */
-    private function getVuexModule()
+    public function getDefaultVuexModule()
     {
         if (property_exists($this, 'vuex') && isset($this->vuex['namespace'])) {
             return $this->vuex['namespace'];
@@ -43,7 +44,7 @@ trait Vuexable
      *
      * @return string
      */
-    private function getVuexModelKey()
+    public function getDefaultVuexKey()
     {
         if (property_exists($this, 'vuex') && isset($this->vuex['model'])) {
             return $this->vuex['model'];
@@ -58,7 +59,7 @@ trait Vuexable
      *
      * @return string
      */
-    private function getVuexCollectionKey()
+    public function getDefaultVuexCollectionKey()
     {
         if (property_exists($this, 'vuex') && isset($this->vuex['collection'])) {
             return $this->vuex['collection'];
@@ -77,10 +78,13 @@ trait Vuexable
      */
     public function toVuex($namespace = null, $key = null)
     {
-        $namespace = $namespace ?? $this->getVuexModule();
-        $key = $key ?? $this->getVuexModelKey();
+        $namespace = $namespace ?? $this->getDefaultVuexModule();
+        $key = $key ?? $this->getDefaultVuexKey();
 
-        // TODO: if not key, throw error
+        if (!$key) {
+            throw new VuexInvalidKeyException("Could not determine key");
+        }
+
         $data = [$key => $this];
 
         Vuex::store(function ($store) use ($namespace, $data) {

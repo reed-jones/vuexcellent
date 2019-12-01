@@ -2,20 +2,22 @@
 
 namespace ReedJones\Vuexcellent\Mixins;
 
+use ReedJones\Vuexcellent\Exceptions\VuexInvalidKeyException;
 use ReedJones\Vuexcellent\Facades\Vuex;
+use ReedJones\Vuexcellent\Interfaces\CanVuex;
 
-class VuexCollectionMixin
+class VuexCollectionMixin implements CanVuex
 {
 
     public function toVuex()
     {
-        function getVuexModule()
+        function getDefaultVuexModule()
         {
             // same as key (ideally in the same loop even)
             return null;
         }
 
-        function getVuexModelKey()
+        function getDefaultVuexKey()
         {
             // Try to find key
             // $this->count() && $this->every->key === $this->first->key;
@@ -23,10 +25,12 @@ class VuexCollectionMixin
         }
 
         return function ($namespace = null, $key = null) {
-            $namespace = $namespace ?? getVuexModule();
-            $key = $key ?? getVuexModelKey();
+            $namespace = $namespace ?? getDefaultVuexModule();
+            $key = $key ?? getDefaultVuexKey();
 
-            // TODO: if not key, throw error
+            if (!$key) {
+                throw new VuexInvalidKeyException("Could not determine key");
+            }
             $data = [$key => $this];
 
             Vuex::store(function ($store) use ($namespace, $data) {

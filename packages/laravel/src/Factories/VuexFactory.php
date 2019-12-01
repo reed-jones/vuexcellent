@@ -3,6 +3,8 @@
 namespace ReedJones\Vuexcellent\Factories;
 
 use Closure;
+use ReedJones\Vuexcellent\Exceptions\VuexInvalidModuleException;
+use ReedJones\Vuexcellent\Exceptions\VuexInvalidStateException;
 
 class VuexFactory
 {
@@ -34,6 +36,7 @@ class VuexFactory
         // left for historical purposes, unlikely to be used moving forward
         $closure($this);
 
+        // Examples... this call is effectively replaced by:
         // Vuex::state(['all' => User::all()]);
         // Vuex::module('users', ['all' => User::all()]);
     }
@@ -48,7 +51,7 @@ class VuexFactory
     public function state($state)
     {
         if (!is_array($state) && !$state instanceof \Illuminate\Support\Collection) {
-            throw new \InvalidArgumentException('$state must be an array or a Collection.');
+            throw new VuexInvalidStateException('$state must be an array or a Collection.');
         }
 
         if ($state instanceof \Illuminate\Support\Collection) {
@@ -67,27 +70,27 @@ class VuexFactory
      * Creates or Updates a new vuex module
      *
      * @param string $namespace
-     * @param \Illuminate\Support\Collection|array $module
+     * @param \Illuminate\Support\Collection|array $state
      *
      * @return void
      */
-    public function module(string $namespace, $module)
+    public function module(string $namespace, $state)
     {
         if (!is_string($namespace) || empty($namespace)) {
-            throw new \InvalidArgumentException('$namespace must be a string.');
+            throw new VuexInvalidModuleException('$namespace must be a string.');
         }
 
-        if (!is_array($module) && !$module instanceof \Illuminate\Support\Collection) {
-            throw new \InvalidArgumentException('$module must be an array or a Collection.');
+        if (!is_array($state) && !$state instanceof \Illuminate\Support\Collection) {
+            throw new VuexInvalidStateException('$state must be an array or a Collection.');
         }
 
-        if ($module instanceof \Illuminate\Support\Collection) {
-            $module = $module->toArray();
+        if ($state instanceof \Illuminate\Support\Collection) {
+            $state = $state->toArray();
         }
 
         $this->_modules[$namespace] = isset($this->_modules[$namespace])
-            ? array_merge($this->_modules[$namespace], $module)
-            : $module;
+            ? array_merge($this->_modules[$namespace], $state)
+            : $state;
 
         return $this;
     }

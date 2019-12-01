@@ -3,9 +3,11 @@
 namespace ReedJones\Vuexcellent\Extensions;
 
 use Illuminate\Database\Eloquent\Collection;
+use ReedJones\Vuexcellent\Exceptions\VuexInvalidKeyException;
 use ReedJones\Vuexcellent\Facades\Vuex;
+use ReedJones\Vuexcellent\Interfaces\CanVuex;
 
-class VuexSmartCollection extends Collection
+class VuexSmartCollection extends Collection implements CanVuex
 {
     /**
      * Collection constructor override. Setup vuex namespace & key.
@@ -22,10 +24,22 @@ class VuexSmartCollection extends Collection
         parent::__construct($models);
     }
 
-    private function getVuexModule() {
+    /**
+     * Attempts to retrieve the preferred vuex module namespace for the collection
+     *
+     * @return string|null
+     */
+    public function getDefaultVuexModule(): ?string {
         return $this->namespace;
     }
-    private function getVuexModelKey() {
+
+    /**
+     * Attempts to retrieve the preferred model key for vuex.
+     * This is for a collection
+     *
+     * @return string
+     */
+    public function getDefaultVuexKey(): string {
         return $this->key;
     }
 
@@ -37,12 +51,15 @@ class VuexSmartCollection extends Collection
      *
      * @return $this
      */
-    public function toVuex($namespace = null, $key = null)
+    public function toVuex(?string $namespace = null, ?string $key = null)
     {
-        $namespace = $namespace ?? $this->getVuexModule();
-        $key = $key ?? $this->getVuexModelKey();
+        $namespace = $namespace ?? $this->getDefaultVuexModule();
+        $key = $key ?? $this->getDefaultVuexKey();
 
-        // TODO: if not key, throw error
+        if (!$key) {
+            throw new VuexInvalidKeyException("Could not determine key");
+        }
+
         $data = [$key => $this];
 
         Vuex::store(function ($store) use ($namespace, $data) {
