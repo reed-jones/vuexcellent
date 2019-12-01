@@ -56,6 +56,8 @@ class VuexFactory
 
         if ($state instanceof \Illuminate\Support\Collection) {
             $state = $state->toArray();
+        } else {
+            $state = collect($state)->toArray();
         }
 
         // set or append data to internal _state array
@@ -86,6 +88,8 @@ class VuexFactory
 
         if ($state instanceof \Illuminate\Support\Collection) {
             $state = $state->toArray();
+        } else {
+            $state = collect($state)->toArray();
         }
 
         $this->_modules[$namespace] = isset($this->_modules[$namespace])

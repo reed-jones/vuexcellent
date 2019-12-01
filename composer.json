@@ -1,15 +1,23 @@
 {
     "version": "v1.3.0",
     "require-dev": {
-        "symplify/monorepo-builder": "^7.1",
-        "phpunit/phpunit": "^7.3"
+        "orchestra/testbench": "^4.4",
+        "phpunit/phpunit": "^8.4",
+        "symplify/monorepo-builder": "^7.1"
     },
     "autoload": {
         "psr-4": {
             "ReedJones\\Vuexcellent\\": "packages/laravel/src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ReedJones\\Vuexcellent\\Test\\": "packages/laravel/tests/"
+        }
+    },
     "replace": {
         "vuexcellent/laravel": "self.version"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

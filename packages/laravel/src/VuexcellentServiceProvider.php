@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use ReedJones\Vuexcellent\Factories\VuexFactory;
 use ReedJones\Vuexcellent\Mixins\VuexCollectionMixin;
 use ReedJones\Vuexcellent\Mixins\VuexResponseMixin;

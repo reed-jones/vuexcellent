@@ -9,10 +9,14 @@
             "email": "reedjones@reedjones.com"
         }
     ],
-    "require": {},
     "autoload": {
         "psr-4": {
             "ReedJones\\Vuexcellent\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ReedJones\\Vuexcellent\\Test\\": "tests/"
         }
     },
     "extra": {
@@ -24,5 +28,10 @@
                 "Vuex": "ReedJones\\Vuexcellent\\Facades\\Vuex"
             }
         }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.4",
+        "orchestra/testbench": "^4.4"
     }
 }

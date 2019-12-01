@@ -6,23 +6,23 @@ use ReedJones\Vuexcellent\Exceptions\VuexInvalidKeyException;
 use ReedJones\Vuexcellent\Facades\Vuex;
 use ReedJones\Vuexcellent\Interfaces\CanVuex;
 
-class VuexCollectionMixin implements CanVuex
+class VuexCollectionMixin
 {
 
+    // function getDefaultVuexModule()
+    // {
+    //     // same as key (ideally in the same loop even)
+    //     return null;
+    // }
+
+    // function getDefaultVuexKey()
+    // {
+    //     // Try to find key
+    //     // $this->count() && $this->every->key === $this->first->key;
+    //     return null;
+    // }
     public function toVuex()
     {
-        function getDefaultVuexModule()
-        {
-            // same as key (ideally in the same loop even)
-            return null;
-        }
-
-        function getDefaultVuexKey()
-        {
-            // Try to find key
-            // $this->count() && $this->every->key === $this->first->key;
-            return null;
-        }
 
         return function ($namespace = null, $key = null) {
             $namespace = $namespace ?? getDefaultVuexModule();

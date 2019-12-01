@@ -29,7 +29,7 @@ trait Vuexable
      *
      * @return string|null
      */
-    public function getDefaultVuexModule()
+    public function getDefaultVuexModule(): ?string
     {
         if (property_exists($this, 'vuex') && isset($this->vuex['namespace'])) {
             return $this->vuex['namespace'];
@@ -44,7 +44,7 @@ trait Vuexable
      *
      * @return string
      */
-    public function getDefaultVuexKey()
+    public function getDefaultVuexKey(): string
     {
         if (property_exists($this, 'vuex') && isset($this->vuex['model'])) {
             return $this->vuex['model'];
