@@ -1,0 +1,28 @@
+{
+    "name": "vuexcellent/laravel",
+    "description": "Magic Data Loading. Laravel <-> Vuex Syncing",
+    "type": "library",
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Reed Jones",
+            "email": "reedjones@reedjones.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "ReedJones\\Vuexcellent\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ReedJones\\Vuexcellent\\VuexcellentServiceProvider"
+            ],
+            "aliases": {
+                "Vuex": "ReedJones\\Vuexcellent\\Facades\\Vuex"
+            }
+        }
+    }
+}
