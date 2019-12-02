@@ -1,14 +1,12 @@
 module.exports = {
     title: 'Vuexcellent',
-    description: 'Just playing around',
+    description: 'Magic Data Loading. Laravel <-> Vuex Syncing',
     themeConfig: {
-        repo: 'reed-jones/vuexcellent-docs',
+        repo: 'reed-jones/vuexcellent',
         docsDir: 'docs',
         editLinks: true,
         nav: [
             { text: 'Home', link: '/' },
-            { text: 'Vuexcellent-Laravel', link: 'https://github.com/reed-jones/vuexcellent-laravel' },
-            { text: 'Vuexcellent-Vue', link: 'https://github.com/reed-jones/vuexcellent-js' },
         ],
         sidebar: [
             {
@@ -16,10 +14,9 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/',
-                    '/installation/laravel',
-                    '/installation/vue',
+                    '/installation/',
                     '/usage',
-                    '/api-reference'
+                    '/api/'
                 ]
             }
         ]

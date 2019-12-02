@@ -1,5 +1,5 @@
 {
-  "name": "@j0nz/vuexcellent",
+  "name": "@vuexcellent/vuex",
   "version": "2.0.0",
   "description": "Autoloader for server provided initial state.",
   "main": "src/index.js",

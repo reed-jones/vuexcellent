@@ -29,6 +29,7 @@ export class Store extends Vuex.Store {
             SSRState
         );
 
+        // Get mutation helpers, passing the mutation prefix to the generator
         const { createMutant, getMutation } = mutantGenerator(options)
 
         // generate 'set' mutations for each state value if autoMutate is enabled
