@@ -1,16 +1,16 @@
 # Vue.js Installation
 
 ```sh
-npm install @j0nz/vuexcellent
+npm install @vuexcellent/vuex
 # or
-yarn add @j0nz/vuexcellent
+yarn add @vuexcellent/vuex
 ```
 
-Now just use `@j0nz/vuexcellent` instead of `vuex` when you are creating your store.
+Now just use `@vuexcellent/vuex` instead of `vuex` when you are creating your store.
 
 ```js
 import Vue from 'vue'
-import Vuex, { Store } from '@j0nz/vuexcellent'
+import Vuex, { Store } from '@vuexcellent/vuex'
 Vue.use(Vuex)
 
 const store = new Store({

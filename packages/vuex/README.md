@@ -7,14 +7,14 @@ This is the repo containing the Vue.js component of Vuexcellent.
 ## Vue.js installation
 
 ```sh
-npm install @j0nz/vuexcellent
-yarn add @j0nz/vuexcellent
+npm install @vuexcellent/vuex
+yarn add @vuexcellent/vuex
 ```
 
-Now just use `@j0nz/vuexcellent` instead of `vuex` when you are creating your store.
+Now just use `@vuexcellent/vuex` instead of `vuex` when you are creating your store.
 
 ```js
-import Vuex, { Store } from '@j0nz/vuexcellent'
+import Vuex, { Store } from '@vuexcellent/vuex'
 
 const store = new Store({
     //...
@@ -23,5 +23,5 @@ const store = new Store({
 All vuex options are re-exported from vuexcellent for ease of use. For example:
 
 ```js
-import { mapState } from '@j0nz/vuexcellent'
+import { mapState } from '@vuexcellent/vuex'
 ```

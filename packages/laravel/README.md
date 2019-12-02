@@ -7,7 +7,7 @@ This is the repo containing the Laravel component of Vuexcellent.
 # Laravel installation
 
 ```sh
-composer require reed-jones/vuexcellent
+composer require vuexcellent/laravel
 ```
 
 Out of the box, `ReedJones\Vuexcellent\VuexcellentServiceProvider` should be automatically registered, and `ReedJones\Vuexcellent\Facades\Vuex` should be aliased as `Vuex`.
