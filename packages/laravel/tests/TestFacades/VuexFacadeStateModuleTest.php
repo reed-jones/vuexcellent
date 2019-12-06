@@ -35,6 +35,58 @@ class VuexFacadeStateModuleTest extends TestCase
         );
     }
 
+    public function test_vuex_nested_modules() {
+        $namespace = 'app/tests';
+        $data = ['works' => 'true'];
+
+        Vuex::module($namespace, $data);
+
+        $this->assertSame(
+            Vuex::asArray(),
+            ['modules' => [
+                'app' => [
+                    'modules' => [
+                        'tests' => [
+                            'state' => $data
+                        ]
+                    ]
+                ]
+            ]]
+        );
+    }
+
+
+    public function test_vuex_nested_modules_merge_properly() {
+        $namespace = 'app/tests';
+        $data_1 = ['works' => 'true'];
+        $data_2 = ['hooray' => true];
+        $data_3 = ['works' => 'yup'];
+
+        Vuex::module('app', $data_3);
+
+        Vuex::module($namespace, $data_1);
+
+        Vuex::module($namespace, $data_2);
+
+
+        $this->assertSame(
+            Vuex::asArray(),
+            ['modules' => [
+                'app' => [
+                    'state' => $data_3,
+                    'modules' => [
+                        'tests' => [
+                            'state' => array_merge(
+                                $data_1,
+                                $data_2,
+                            )
+                        ]
+                    ]
+                ]
+            ]]
+        );
+    }
+
     public function test_vuex_module_multiple_calls_get_merged()
     {
         $namespace = 'app';

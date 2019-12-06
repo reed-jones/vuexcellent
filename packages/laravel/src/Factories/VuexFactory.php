@@ -5,6 +5,7 @@ namespace ReedJones\Vuexcellent\Factories;
 use Closure;
 use ReedJones\Vuexcellent\Exceptions\VuexInvalidModuleException;
 use ReedJones\Vuexcellent\Exceptions\VuexInvalidStateException;
+use Illuminate\Support\Str;
 
 class VuexFactory
 {
@@ -13,14 +14,14 @@ class VuexFactory
      *
      * @var array $_state
      */
-    private $_state;
+    private $_state = [];
 
     /**
      * Vuex modules
      *
      * @var array
      */
-    private $_modules;
+    private $_modules = [];
 
     /**
      * Creates a new 'Vuex' class for easy $store access
@@ -92,9 +93,28 @@ class VuexFactory
             $state = collect($state)->toArray();
         }
 
-        $this->_modules[$namespace] = isset($this->_modules[$namespace])
-            ? array_merge($this->_modules[$namespace], $state)
-            : $state;
+        if (!Str::contains($namespace, '/')) {
+            // simple state
+            if (!isset($this->_modules[$namespace])) {
+                $this->_modules[$namespace] = [];
+            }
+
+            $this->_modules[$namespace]['state'] = isset($this->_modules[$namespace]['state'])
+                ? array_merge_recursive($this->_modules[$namespace]['state'], $state)
+                : $state;
+        } else {
+            // nested modules
+            $namespaces = array_reverse(collect(explode("/", $namespace))->toArray());
+            // final state is starting value
+            $arr = $state;
+            // build array in reverse
+            foreach ($namespaces as $idx => $key) {
+                $type = $idx === 0 ? 'state' : 'modules';
+                $arr = [$key => [$type => $arr]];
+            }
+
+            $this->_modules = array_merge_recursive($this->_modules, $arr);
+        }
 
         return $this;
     }
@@ -116,7 +136,7 @@ class VuexFactory
             $store['modules'] = [];
 
             foreach ($this->_modules as $module => $value) {
-                $store['modules'][$module] = ['state' => $value];
+                $store['modules'][$module] = $value;
             }
         }
 
@@ -139,7 +159,8 @@ class VuexFactory
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function asResponse() {
+    public function asResponse()
+    {
         return response()->json(['$vuex' => $this->asArray()]);
     }
 }
