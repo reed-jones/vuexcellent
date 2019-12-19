@@ -16,7 +16,7 @@ class VuexSmartCollection extends Collection implements CanVuex
      * @param string|null $namespace
      * @param string|null $key
      */
-    public function __construct(array $models = [], $namespace = null, $key = null)
+    public function __construct($models = [], $namespace = null, $key = null)
     {
         $this->namespace = $namespace;
         $this->key = $key;
