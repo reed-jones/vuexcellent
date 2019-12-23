@@ -9,16 +9,25 @@
  */
 const commitData = ({ store, mutator, _state }, { state = {}, modules = {} }) => {
     // Commit base state changes
-    Object.entries(state).forEach(([key, value]) => { store.commit(mutator(key), value) })
+    Object.entries(state).forEach(([key, value]) => {
+        store.commit(mutator(key), value)
+    })
 
     // Commit 1-level deep module state changes
-    Object.entries(modules).forEach(([name, data]) => {
+    const commitModules = (m, prefix = '') => Object.entries(m).forEach(([name, data]) => {
         Object.entries(data.state || {}).forEach(([key, value]) => {
-            const mod = name.split('/').reduce((acc, n) => acc[n] || acc.modules[n], _state.modules)
+            const fullName = [prefix, name].join('/') // optionally prefix name with namespace
+            const mod = fullName.split('/').reduce((acc, n) => acc[n] || acc.modules[n], _state.modules)
             const { namespaced = false } = mod
-            store.commit(mutator(key, namespaced && name), value)
+            store.commit(mutator(key, namespaced && fullName), value)
         })
+
+        if (Object.keys(data.modules || {}).length) {
+            commitModules(data.modules, name)
+        }
     })
+
+    commitModules(modules)
 }
 
 /**
