@@ -11,11 +11,9 @@ Vuexcellent is a set of libraries originally designed to help load data from you
 
 public function index() {
     // Set the initial vue state
-    Vuex::store(function($store) {
-        $store->state([
-            'posts' => Posts::paginate(15)
-        ]);
-    });
+    Vuex::state([
+        'posts' => Posts::paginate(15)
+    ]);
 
     // Navigate to the view as
     // you normally would
@@ -54,15 +52,13 @@ export default {
 // PostController.php
 public function search() {
     // Set the initial vue state
-    Vuex::store(function($store) {
-        $store->state([
-            'posts' => Posts::paginate(15)
-        ]);
-    });
+    Vuex::state([
+        'posts' => Posts::paginate(15)
+    ]);
 
     // the updated posts from page 2 will be automatically committed
     // and available
-    return Vuex::asResponse();
+    return response()->vuex();
 ```
 
 

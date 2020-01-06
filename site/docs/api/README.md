@@ -7,6 +7,9 @@ use ReedJones\Vuexcellent\Facades\Vuex;
 
 ## Facade Methods
 
+### Store
+> Notice, as of version 2.0.0 the `::store` method has been replaced by the `state`/`module` methods. Although I don't have any immediate plans to remove this function, it will be removed sometime in the future.
+
 ```php
 Vuex::store(Closure $closure);
 ```
@@ -23,21 +26,40 @@ Vuex::store(function($store) {
 ```
 
 ---
+### State
+The state function comes with two main modes. If a collection or array is supplied, It will be stored immediately. If a function is supplied instead, it will be lazily evaluated, which means it wont be evaluated until the response is formed.
 
 ```php
-Vuex::state(array|Collection $state);
+Vuex::state(array|Collection $state); // Immediate mode
+Vuex::state(Closure $closure); // Lazy Mode
 ```
 Merges `$state` to the base vuex state object. `state` accepts a single argument which can be either an `array`, or a Laravel Collection (`\Illuminate\Support\Collection`);
 
 Example:
 ```php
+// Immediate
 Vuex::state(['is_admin' => false]);
+
+// Lazy
+Vuex::state(function () {
+    return Auth::user()
+});
+
+// Mixed
+Vuex::state([
+    'now' => now(),
+    'user' => function () {
+        return Auth::user()
+    }
+]);
 ```
 
 ---
+### Module
+The module function will store a state object to its namespaced module. The namespace portion is a string matching the vuex namespace you wish to save to. Nested module namespaces can be specified with a slash: e.g. `active/user`. The $state option follows the same pattern as the state description above. It can be either an array, a collection, or a function/closure.
 
 ```php
-Vuex::module(string $namespace, array|Collection $state);
+Vuex::module(string $namespace, array|Collection|Closure $state);
 ```
 Merges `$state` into the `$naamespace`'d vuex module. `module` accepts two arguments. The first is a string, and will be used as the vuex module name. The second is an `array` or `\Illuminate\Support\Collection` which will be used as the state for the module.
 
@@ -49,20 +71,20 @@ Vuex::module('users', ['all' => User::all()]);
 ---
 
 ```php
-$data = Vuex::asArray();
+$data = Vuex::toArray();
 ```
 Formats all currently supplied data into an array matching Vuex hierarchy, for easy merging.
 
 ---
 ```php
-$json = Vuex::asJson();
+$json = Vuex::toJson();
 ```
-Same as the above `asArray` however Json encoded.
+Same as the above `toArray` however Json encoded.
 
 ---
 
 ```php
-return Vuex::asResponse();
+return Vuex::toResponse();
 ```
 Returns a response properly formatted to be picked up by the auto-mutators on the front-end.
 
@@ -77,7 +99,7 @@ Behind the scenes `@vuex` expands into
 
 ```php
 <script id='initial-state'>
-    window.__INITIAL_STATE__ = <?php echo ReedJones\Vuexcellent\Facades\Vuex::asJson(); ?>
+    window.__INITIAL_STATE__ = <?php echo ReedJones\Vuexcellent\Facades\Vuex::toJson(); ?>
 </script>
 ```
 ---

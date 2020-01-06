@@ -7,6 +7,7 @@ Installation of vuexcellent is primarily a two step process. This is split up be
 composer require vuexcellent/laravel
 yarn add @vuexcellent/vuex
 ```
+
 ```html
 <!-- layout.blade.php -->
 <head>
@@ -14,6 +15,7 @@ yarn add @vuexcellent/vuex
   @vuex
 </head>
 ```
+
 ```js
 // store.js
 import Vuex, { Store } from '@vuexcellent/vuex'
@@ -28,7 +30,9 @@ const store = new Store({
 ```sh
 composer require vuexcellent/laravel
 ```
+
 Next, its recommended to add the `@vuex` directive into your head tag. This isn't required if you are planning on passing all data via API calls, but its an easy step and can make for a nicer experience when all the data is already loaded on page load.
+
 ```html
 <head>
   <title>Vuexcellent Docs</title>
