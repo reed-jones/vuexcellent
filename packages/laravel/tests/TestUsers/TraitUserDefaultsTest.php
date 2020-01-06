@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 use ReedJones\Vuexcellent\Test\Models\TraitUserDefaults;
 
 class TraitUserDefaultsTest extends TestCase
@@ -11,8 +11,7 @@ class TraitUserDefaultsTest extends TestCase
     {
         TraitUserDefaults::find(1)->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -27,8 +26,7 @@ class TraitUserDefaultsTest extends TestCase
     {
         TraitUserDefaults::all()->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -45,8 +43,7 @@ class TraitUserDefaultsTest extends TestCase
     {
         TraitUserDefaults::find(1)->toVuex('users', 'testUser');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -61,8 +58,7 @@ class TraitUserDefaultsTest extends TestCase
     {
         TraitUserDefaults::all()->toVuex('users', 'allUsers');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [

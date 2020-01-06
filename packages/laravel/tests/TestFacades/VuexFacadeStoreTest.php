@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 
 class VuexFacadeStoreTest extends TestCase
 {
@@ -14,8 +14,7 @@ class VuexFacadeStoreTest extends TestCase
             $store->state($data);
         });
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             ['state' => $data]
         );
     }
@@ -29,8 +28,7 @@ class VuexFacadeStoreTest extends TestCase
             $store->module($namespace, $data);
         });
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             ['modules' => [
                 $namespace => [
                     'state' => $data
@@ -51,8 +49,7 @@ class VuexFacadeStoreTest extends TestCase
             $store->module($namespace, ['success' => 'confirmed']);
         });
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             ['modules' => [
                 $namespace => [
                     'state' => [
@@ -76,8 +73,7 @@ class VuexFacadeStoreTest extends TestCase
             $store->module($namespace, ['success' => 'confirmed']);
         });
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [
                     'works' => true

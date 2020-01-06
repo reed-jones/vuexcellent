@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 use ReedJones\Vuexcellent\Test\Models\ExtendedUser;
 
 class ExtendedUserTest extends TestCase
@@ -10,8 +10,7 @@ class ExtendedUserTest extends TestCase
     public function test_an_extended_model_without_defaults_saves_to_state() {
         ExtendedUser::find(1)->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [ 'active' => ExtendedUser::find(1)->toArray() ]
             ]
@@ -21,8 +20,7 @@ class ExtendedUserTest extends TestCase
     public function test_all_trait_models_without_defaults_saves_to_state() {
         ExtendedUser::all()->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [
                     'all' =>  ExtendedUser::all()->toArray()
@@ -35,8 +33,7 @@ class ExtendedUserTest extends TestCase
     public function test_an_extended_model_with_specified_module_saves_to_module() {
         ExtendedUser::find(1)->toVuex('users', 'testUser');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -50,8 +47,7 @@ class ExtendedUserTest extends TestCase
     public function test_all_trait_models_with_specified_module_saves_to_module() {
         ExtendedUser::all()->toVuex('users', 'allOtherUsers');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [

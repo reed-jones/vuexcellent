@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 
 class VuexFacadeStateModuleTest extends TestCase
 {
@@ -68,7 +68,6 @@ class VuexFacadeStateModuleTest extends TestCase
 
         Vuex::module($namespace, $data_2);
 
-
         $this->assertSame(
             Vuex::asArray(),
             ['modules' => [
@@ -116,8 +115,7 @@ class VuexFacadeStateModuleTest extends TestCase
 
         Vuex::module($namespace, ['success' => 'confirmed']);
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [
                     'works' => true

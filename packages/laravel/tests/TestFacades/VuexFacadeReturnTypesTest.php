@@ -2,20 +2,20 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
-use Route;
+use Illuminate\Support\Facades\Route;
+use ReedJones\Vuexcellent\Facades\Vuex;
 
 class VuexFacadeReturnTypesTest extends TestCase
 {
+
     public function test_vuex_as_array_is_array()
     {
         $data = ['works' => true];
 
         Vuex::state($data);
 
-        $this->assertSame(
-            ['state' => $data],
-            Vuex::asArray()
+        $this->assertVuex(
+            ['state' => $data]
         );
     }
 
@@ -47,9 +47,6 @@ class VuexFacadeReturnTypesTest extends TestCase
     }
 
     public function test_as_array_with_no_data_returns_empty_array() {
-        $this->assertSame(
-            [],
-            Vuex::asArray()
-        );
+        $this->assertVuex([]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 
 class BasicCollectionTest extends TestCase
 {
@@ -10,9 +10,7 @@ class BasicCollectionTest extends TestCase
     {
         collect([1, 2, 3, 4, 5])->toVuex('numbers', 'digits');
 
-
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'numbers' => [

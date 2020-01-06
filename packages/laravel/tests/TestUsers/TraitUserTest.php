@@ -2,7 +2,7 @@
 
 namespace ReedJones\Vuexcellent\Test;
 
-use Vuex;
+use ReedJones\Vuexcellent\Facades\Vuex;
 use ReedJones\Vuexcellent\Test\Models\TraitUser;
 
 class TraitUserTest extends TestCase
@@ -10,8 +10,7 @@ class TraitUserTest extends TestCase
     public function test_a_trait_model_without_defaults_saves_to_state() {
         TraitUser::find(1)->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [
                     'active' =>  TraitUser::find(1)->toArray()
@@ -23,8 +22,7 @@ class TraitUserTest extends TestCase
     public function test_all_trait_models_without_defaults_saves_to_state() {
         TraitUser::all()->toVuex();
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'state' => [
                     'all' =>  TraitUser::all()->toArray()
@@ -36,8 +34,7 @@ class TraitUserTest extends TestCase
     public function test_a_trait_model_with_specified_module_saves_to_module() {
         TraitUser::find(1)->toVuex('users', 'testUser');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -53,8 +50,7 @@ class TraitUserTest extends TestCase
     public function test_all_trait_models_with_specified_module_saves_to_module() {
         TraitUser::all()->toVuex('users', 'allOtherUsers');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [
@@ -74,8 +70,7 @@ class TraitUserTest extends TestCase
         // so that we can call ->toVuex() on it
         collect(TraitUser::paginate())->toVuex('users', 'allUsers');
 
-        $this->assertSame(
-            Vuex::asArray(),
+        $this->assertVuex(
             [
                 'modules' => [
                     'users' => [

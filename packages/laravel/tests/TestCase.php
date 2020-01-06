@@ -59,4 +59,12 @@ class TestCase extends OrchestraTestCase
             'Vuex' => Vuex::class,
         ];
     }
+
+    protected function assertVuex($data)
+    {
+        $this->assertSame(
+            Vuex::asArray(),
+            $data
+        );
+    }
 }
